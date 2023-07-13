@@ -1,17 +1,8 @@
-#include <iostream>
-#include <cstddef>
-
+#include <cstdlib>
+#include <proxy/application.hpp>
 
 int main(int argc, char** argv)
 {
-    try
-    {
-        std::cout << "Hello, world!\n";
-    } 
-    catch(const std::exception& exc)
-    {
-        std::cerr << exc.what() << std::endl;
-        return EXIT_FAILURE;
-    }
-    return EXIT_SUCCESS;
+    AppPtr app = Application::Create(argc, argv);
+    return app ? app->Run() : EXIT_FAILURE;
 }

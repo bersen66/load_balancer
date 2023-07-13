@@ -1,3 +1,15 @@
-add_executable(proxy main.cpp)
+set(
+    SOURCES
+    main.cpp
+    application.cpp
+)
 
-target_link_libraries(proxy ${yaml-cpp_LIBRARIES})
+
+add_executable(proxy ${SOURCES}) 
+
+target_link_libraries(proxy
+    ${yaml-cpp_LIBRARIES}
+    Boost::program_options
+)
+
+add_dependencies(proxy copy_configs)
