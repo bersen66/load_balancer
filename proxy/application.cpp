@@ -6,6 +6,7 @@
 #include <boost/program_options.hpp>
 
 #include <proxy/application.hpp>
+#include <proxy/endpoints.hpp>
 
 
 namespace opt = boost::program_options;
@@ -57,7 +58,7 @@ int Application::Run() noexcept
     try
     {
         YAML::Node config = YAML::LoadFile(config_path_);
-        std::cout << config["holla"].as<std::string>() << std::endl;
+        auto eps = ParseEndpoints(config["endpoints"].begin(), config["endpoints"].end());
     } 
     catch (const std::exception& exc)
     {

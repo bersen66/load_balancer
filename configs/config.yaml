@@ -1,2 +1,10 @@
 hello: world
 holla: muchachos
+
+endpoints:
+  mock1:
+    ip: 127.0.0.1
+    port: 8080
+  mock2:
+    ip: ::1
+    port: 9000

@@ -2,6 +2,7 @@ set(
     SOURCES
     main.cpp
     application.cpp
+    endpoints.cpp
 )
 
 
