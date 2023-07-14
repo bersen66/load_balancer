@@ -4,10 +4,11 @@
 
 #include <yaml-cpp/yaml.h>
 #include <boost/program_options.hpp>
+#include <boost/asio/strand.hpp>
+#include <boost/asio/io_context.hpp>
 
 #include <proxy/application.hpp>
-#include <proxy/endpoints.hpp>
-
+#include <proxy/server.hpp>
 
 namespace opt = boost::program_options;
 
@@ -53,12 +54,16 @@ AppPtr Application::Create(int argc, char** argv)
     return std::make_unique<Application>(vm["config"].as<std::string>());
 }
 
+
 int Application::Run() noexcept
 {
     try
     {
         YAML::Node config = YAML::LoadFile(config_path_);
-        auto eps = ParseEndpoints(config["endpoints"].begin(), config["endpoints"].end());
+        Server balancer = Server::FromConfig(config);
+
+        // auto epndpoints = ParseEndpoints(config["endpoints"].begin(), config["endpoints"].end());
+
     } 
     catch (const std::exception& exc)
     {

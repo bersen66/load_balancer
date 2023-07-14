@@ -3,8 +3,7 @@
 using boost::asio::ip::tcp;
 namespace ip = boost::asio::ip;
 
-auto ParseEndpoints(YAML::const_iterator begin, YAML::const_iterator end) 
-    -> std::map<std::string, tcp::endpoint>
+EndpointMap ParseEndpoints(YAML::const_iterator begin, YAML::const_iterator end)  
 {
 
     std::map<std::string, tcp::endpoint> result;

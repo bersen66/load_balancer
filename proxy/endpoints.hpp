@@ -5,8 +5,8 @@
 #include <yaml-cpp/yaml.h>
 #include <boost/asio/ip/tcp.hpp>
 
+using Endpoint = boost::asio::ip::tcp::endpoint;
 
+using EndpointMap = std::map<std::string, Endpoint>;
 
-
-auto ParseEndpoints(YAML::const_iterator begin, YAML::const_iterator end) 
-    -> std::map<std::string, boost::asio::ip::tcp::endpoint>;
+EndpointMap ParseEndpoints(YAML::const_iterator begin, YAML::const_iterator end);
