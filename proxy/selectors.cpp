@@ -1,6 +1,5 @@
 #include <proxy/selectors.hpp>
 
-
 void RoundRobinStrategy::InsertEndpoint(const Endpoint& ep) 
 {
     

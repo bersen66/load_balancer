@@ -6,7 +6,7 @@ namespace ip = boost::asio::ip;
 EndpointMap ParseEndpoints(YAML::const_iterator begin, YAML::const_iterator end)  
 {
 
-    std::map<std::string, tcp::endpoint> result;
+    std::map<std::string, Endpoint> result;
     for (auto it = begin; it != end; ++it)
     {
         const auto& ep = *it;

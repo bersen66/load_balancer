@@ -1,11 +1,12 @@
+#include <chrono>
 #include <string>
 #include <cstdlib>
 #include <iostream>
+#include <chrono>
 
+#include <thread>
 #include <yaml-cpp/yaml.h>
 #include <boost/program_options.hpp>
-#include <boost/asio/strand.hpp>
-#include <boost/asio/io_context.hpp>
 
 #include <proxy/application.hpp>
 #include <proxy/server.hpp>
@@ -60,10 +61,11 @@ int Application::Run() noexcept
     try
     {
         YAML::Node config = YAML::LoadFile(config_path_);
-        Server balancer = Server::FromConfig(config);
+        Server server = Server::FromConfig(config);
+        server.Serve();
 
-        // auto epndpoints = ParseEndpoints(config["endpoints"].begin(), config["endpoints"].end());
-
+        std::this_thread::sleep_for(std::chrono::seconds(10));
+        
     } 
     catch (const std::exception& exc)
     {
