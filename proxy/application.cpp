@@ -9,11 +9,12 @@
 
 #include <proxy/application.hpp>
 #include <proxy/server.hpp>
+#include <utility>
 
 namespace opt = boost::program_options;
 
-Application::Application(const std::string& path_to_config)
-		: config_path_(path_to_config)
+Application::Application(std::string path_to_config)
+		: config_path_(std::move(path_to_config))
 {}
 
 AppPtr Application::Create(int argc, char** argv)
@@ -50,7 +51,8 @@ AppPtr Application::Create(int argc, char** argv)
 		std::cerr << "path to config file must be specified!" << std::endl;
 		return nullptr;
 	}
-	return std::make_unique<Application>(vm["config"].as<std::string>());
+	return std::make_unique<Application>(
+			vm["config"].as<std::string>());
 }
 
 int Application::Run() noexcept
@@ -61,6 +63,7 @@ int Application::Run() noexcept
 		Server server = Server::FromConfig(config);
 		server.Run();
 
+		// STARTING UI
 		std::this_thread::sleep_for(std::chrono::seconds(10));
 
 	}

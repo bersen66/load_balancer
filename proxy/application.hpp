@@ -13,7 +13,7 @@ class Application
 public:
 	static AppPtr Create(int argc, char** argv);
 
-	explicit Application(const std::string& path_to_config);
+	explicit Application(std::string  path_to_config);
 
 	int Run() noexcept;
 
