@@ -10,6 +10,7 @@ set(
     selectors.cpp
     selectors.hpp
     session.cpp
+    session.hpp
 )
 
 
@@ -19,8 +20,6 @@ add_executable(proxy ${SOURCES})
 target_link_libraries(proxy
     ${yaml-cpp_LIBRARIES}
     Boost::program_options
-    Boost::system
-    Boost::thread
 )
 
 # INTERNAL LIBS

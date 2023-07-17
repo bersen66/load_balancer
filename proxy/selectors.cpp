@@ -1,21 +1,21 @@
 #include <proxy/selectors.hpp>
 
-void RoundRobinStrategy::InsertEndpoint(const Endpoint& ep) 
-{
-    
-}
-
-void RoundRobinStrategy::EraseEndpoint(const Endpoint& ep) 
+void RoundRobinStrategy::InsertEndpoint(const Endpoint& ep)
 {
 
 }
 
-Endpoint RoundRobinStrategy::Select() 
+void RoundRobinStrategy::EraseEndpoint(const Endpoint& ep)
 {
-    return {};
+
 }
 
-bool RoundRobinStrategy::Empty() const 
+Endpoint RoundRobinStrategy::Select()
 {
-    return false;
+	return {};
+}
+
+bool RoundRobinStrategy::Empty() const
+{
+	return false;
 }

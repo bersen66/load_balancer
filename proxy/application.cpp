@@ -62,7 +62,7 @@ int Application::Run() noexcept
     {
         YAML::Node config = YAML::LoadFile(config_path_);
         Server server = Server::FromConfig(config);
-        server.Serve();
+        server.Run();
 
         std::this_thread::sleep_for(std::chrono::seconds(10));
         
