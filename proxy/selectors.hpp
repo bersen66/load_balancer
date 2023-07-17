@@ -11,7 +11,7 @@ struct SelectionStrategy
 
 	virtual Endpoint Select() = 0;
 
-	virtual bool Empty() const = 0;
+	[[nodiscard]] virtual bool Empty() const = 0;
 
 	virtual ~SelectionStrategy() = default;
 };

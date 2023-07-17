@@ -17,6 +17,7 @@ using boost::asio::use_awaitable;
 using boost::asio::as_tuple;
 using boost::asio::co_spawn;
 using boost::asio::buffer;
+using boost::asio::cancellation_state;
 
 namespace sys = boost::system;
 
@@ -50,9 +51,14 @@ awaitable<sys::error_code> ForwardMessage(tcp::socket& src, tcp::socket& dest)
 
 awaitable<sys::error_code> Communicate(tcp::socket& client, tcp::socket& server)
 {
+	namespace this_coro = boost::asio::this_coro;
 	while (true)
 	{
-		co_await boost::asio::this_coro::throw_if_cancelled();
+		cancellation_state cs = co_await this_coro::cancellation_state;
+		if (cs.cancelled() != boost::asio::cancellation_type::none)
+		{
+			break;
+		}
 		auto ec = co_await ForwardMessage(client, server);
 		if (ec)
 		{
@@ -66,8 +72,8 @@ awaitable<sys::error_code> Communicate(tcp::socket& client, tcp::socket& server)
 awaitable<void> Session::Run()
 {
 	using namespace boost::asio::experimental::awaitable_operators;
-	auto executor = co_await boost::asio::this_coro::executor;
 	std::variant<sys::error_code, sys::error_code> results
 			= co_await (Communicate(client_, server_) ||
 			            Communicate(server_, client_));
+	co_return;
 }

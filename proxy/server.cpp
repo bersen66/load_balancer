@@ -10,6 +10,7 @@
 #include <boost/asio/strand.hpp>
 
 #include <proxy/server.hpp>
+#include <proxy/session.hpp>
 
 using boost::asio::ip::tcp;
 using boost::asio::use_awaitable;
@@ -29,7 +30,7 @@ Server Server::FromConfig(const YAML::Node& config)
 	EndpointMap endpoints = ParseEndpoints(config["endpoints"].begin(),
 	                                       config["endpoints"].end());
 	SelectorPtr selector = MakeSelector<RoundRobinStrategy>();
-	return Server(threads_num, listen_port, std::move(endpoints), selector);
+	return {threads_num, listen_port, std::move(endpoints), selector};
 }
 
 Server::Server(int threads_num, int listen_port, EndpointMap endpoints,
@@ -55,7 +56,7 @@ void Server::InsertEndpoint(const std::string& id, tcp::endpoint ep)
 	selector_->InsertEndpoint(ep);
 }
 
-void Server::EraseEnpoint(const std::string& id)
+void Server::EraseEndpoint(const std::string& id)
 {
 
 }
@@ -91,8 +92,26 @@ void Server::JoinWorkers()
 	}
 }
 
-awaitable<void> StartSession(tcp::socket client)
+awaitable<void> Server::StartSession(tcp::socket client)
 {
+	try
+	{
+		tcp::socket server_socket(ioc_);
+		auto endpoint = selector_->Select();
+		auto [err] = co_await server_socket.async_connect(endpoint, as_tuple(
+				use_awaitable));
+
+		if (!err)
+		{
+			Session s(std::move(client), std::move(server_socket));
+			co_await s.Run();
+		}
+
+	}
+	catch (const std::exception& exc)
+	{
+		std::cout << "Session exception: " << exc.what() << std::endl;
+	}
 
 	co_return;
 }

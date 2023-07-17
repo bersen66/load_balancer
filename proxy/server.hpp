@@ -35,7 +35,7 @@ public:
 
 	void InsertEndpoint(const std::string& id, tcp::endpoint ep);
 
-	void EraseEnpoint(const std::string& id);
+	void EraseEndpoint(const std::string& id);
 
 	void Shutdown();
 
@@ -46,6 +46,8 @@ private:
 	awaitable<void> DoAccept();
 
 	void JoinWorkers();
+
+	awaitable<void> StartSession(tcp::socket client);
 
 private:
 	io_context ioc_;
