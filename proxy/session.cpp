@@ -46,7 +46,8 @@ awaitable<sys::error_code> ForwardMessage(tcp::socket& src, tcp::socket& dest)
 	{
 		co_return send_req_err;
 	}
-	co_return sys::errc::make_error_code(sys::errc::success);
+	auto result = sys::errc::make_error_code(sys::errc::success);
+	co_return result;
 }
 
 awaitable<sys::error_code> Communicate(tcp::socket& client, tcp::socket& server)
