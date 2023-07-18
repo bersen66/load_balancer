@@ -64,8 +64,12 @@ int Application::Run() noexcept
 		server.Run();
 
 		// STARTING UI
-		std::this_thread::sleep_for(std::chrono::seconds(10));
 
+		while (true)
+		{
+			std::cout << "UI" << std::endl;
+			std::this_thread::sleep_for(std::chrono::seconds(100));
+		}
 	}
 	catch (const std::exception& exc)
 	{

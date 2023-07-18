@@ -106,6 +106,10 @@ awaitable<void> Server::StartSession(tcp::socket client)
 			Session s(std::move(client), std::move(server_socket));
 			co_await s.Run();
 		}
+		else
+		{
+			std::cout << "Session error: " << err.message() << std::endl;
+		}
 
 	}
 	catch (const std::exception& exc)
@@ -129,6 +133,7 @@ awaitable<void> Server::DoAccept()
 			std::cout << "Listener error: " << err.message() << std::endl;
 			break;
 		}
+		std::cout << "Accepted: " << std::endl;
 		co_spawn(make_strand(executor), StartSession(std::move(client)),
 		         detached);
 	}
