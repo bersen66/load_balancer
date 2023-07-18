@@ -6,6 +6,7 @@
 #include <boost/asio/awaitable.hpp>
 #include <boost/asio/ip/tcp.hpp>
 
+#include <proxy/endpoints.hpp>
 #include <proxy/selectors/selectors.hpp>
 
 class Server
