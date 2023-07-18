@@ -29,7 +29,7 @@ Server Server::FromConfig(const YAML::Node& config)
 	int listen_port = config["port"].as<int>();
 	EndpointMap endpoints = ParseEndpoints(config["endpoints"].begin(),
 	                                       config["endpoints"].end());
-	SelectorPtr selector = MakeSelector<RoundRobinStrategy>();
+	SelectorPtr selector = MakeSelector<RoundRobinStrategy>(endpoints);
 	return {threads_num, listen_port, std::move(endpoints), selector};
 }
 

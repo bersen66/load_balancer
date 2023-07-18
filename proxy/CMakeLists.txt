@@ -1,3 +1,5 @@
+add_subdirectory(selectors)
+
 set(
     SOURCES
     main.cpp
@@ -7,14 +9,16 @@ set(
     endpoints.hpp
     server.cpp
     server.hpp
-    selectors.cpp
-    selectors.hpp
     session.cpp
     session.hpp
 )
 
 
-add_executable(proxy ${SOURCES}) 
+add_executable(
+    proxy
+    ${SOURCES}
+    ${SELECTORS_SOURCES}
+)
 
 # EXTERNAL LIBS
 target_link_libraries(proxy
@@ -23,9 +27,9 @@ target_link_libraries(proxy
 )
 
 # INTERNAL LIBS
-#target_link_libraries(proxy
-#    ANY_INTERNAL_LIB
-#)
+target_link_libraries(proxy
+    libselectors
+)
 
 # OTHER DEPENDENCIES
 add_dependencies(proxy copy_configs)
