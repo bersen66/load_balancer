@@ -5,7 +5,7 @@
 class RoundRobinStrategy final : public SelectionStrategy
 {
 public:
-	RoundRobinStrategy(const EndpointMap& endpoints);
+	explicit RoundRobinStrategy(const EndpointMap& endpoints);
 
 	void InsertEndpoint(const Endpoint& ep) override;
 

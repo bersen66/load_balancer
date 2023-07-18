@@ -1,10 +1,17 @@
 #pragma once
 
 #include <memory> // std::shared_ptr
-#include <proxy/endpoints.hpp>
+#include <map>
+#include <boost/asio/ip/tcp.hpp>
 
 struct SelectionStrategy
 {
+public:
+	using Endpoint = boost::asio::ip::tcp::endpoint;
+	using EndpointMap = std::map<std::string, Endpoint>;
+public:
+	SelectionStrategy() = default;
+
 	virtual void InsertEndpoint(const Endpoint& ep) = 0;
 
 	virtual void EraseEndpoint(const Endpoint& ep) = 0;
@@ -15,6 +22,5 @@ struct SelectionStrategy
 
 	virtual ~SelectionStrategy() = default;
 };
-
 
 using SelectorPtr = std::shared_ptr<SelectionStrategy>;
