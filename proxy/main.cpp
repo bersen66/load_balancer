@@ -3,6 +3,6 @@
 
 int main(int argc, char** argv)
 {
-    AppPtr app = Application::Create(argc, argv);
-    return app ? app->Run() : EXIT_FAILURE;
+	AppPtr app = Application::Create(argc, argv);
+	return app ? app->Run() : EXIT_FAILURE;
 }
