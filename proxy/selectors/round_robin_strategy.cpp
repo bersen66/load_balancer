@@ -18,7 +18,7 @@ void RoundRobinStrategy::EraseEndpoint(const Endpoint& ep)
 
 }
 
-RoundRobinStrategy::Endpoint RoundRobinStrategy::Select()
+Endpoint RoundRobinStrategy::Select()
 {
 	return {};
 }

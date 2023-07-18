@@ -5,7 +5,7 @@ set(
     main.cpp
     application.cpp
     application.hpp
-    endpoints.cpp
+    parse_endpoints.cpp
     endpoints.hpp
     server.cpp
     server.hpp

@@ -2,14 +2,10 @@
 
 #include <memory> // std::shared_ptr
 #include <map>
-#include <boost/asio/ip/tcp.hpp>
+#include <proxy/endpoints.hpp>
 
 struct SelectionStrategy
 {
-public:
-	using Endpoint = boost::asio::ip::tcp::endpoint;
-	using EndpointMap = std::map<std::string, Endpoint>;
-public:
 	SelectionStrategy() = default;
 
 	virtual void InsertEndpoint(const Endpoint& ep) = 0;

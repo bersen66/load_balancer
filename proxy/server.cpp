@@ -11,6 +11,7 @@
 
 #include <proxy/server.hpp>
 #include <proxy/session.hpp>
+#include <proxy/parse_endpoints.hpp>
 
 using boost::asio::ip::tcp;
 using boost::asio::use_awaitable;
@@ -105,8 +106,7 @@ awaitable<void> Server::StartSession(tcp::socket client)
 		{
 			Session s(std::move(client), std::move(server_socket));
 			co_await s.Run();
-		}
-		else
+		} else
 		{
 			std::cout << "Session error: " << err.message() << std::endl;
 		}
