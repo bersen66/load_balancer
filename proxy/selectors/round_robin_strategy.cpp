@@ -2,29 +2,63 @@
 
 using tcp = boost::asio::ip::tcp;
 
-RoundRobinStrategy::RoundRobinStrategy(const EndpointMap& endpoints)
+std::vector<Endpoint> GetValues(const EndpointMap& endpoints)
 {
+	std::vector<Endpoint> result;
+	result.reserve(endpoints.size());
 
+	for (const auto& [k, v] : endpoints)
+	{
+		result.push_back(v);
+	}
+
+	return result;
 }
 
-
-void RoundRobinStrategy::InsertEndpoint(const tcp::endpoint& ep)
+RoundRobinStrategy::RoundRobinStrategy(const EndpointMap& endpoints)
+	: endpoints_(GetValues(endpoints))
+	, offset_(0)
 {
+}
 
+void RoundRobinStrategy::InsertEndpoint(const Endpoint& ep)
+{
+	endpoints_.push_back(ep);
 }
 
 void RoundRobinStrategy::EraseEndpoint(const Endpoint& ep)
 {
+	auto it = std::find(endpoints_.begin(), endpoints_.end(), ep);
+	if (it == endpoints_.end())
+	{
+		return;
+	}
+	endpoints_.erase(it);
+	if (!endpoints_.empty())
+	{
+		offset_ = offset_ % endpoints_.size();
+	}
+	else
+	{
+		offset_ = 0;
+	}
 
 }
 
-Endpoint RoundRobinStrategy::Select()
+std::optional<Endpoint> RoundRobinStrategy::Select()
 {
-	return {};
+	if (endpoints_.empty())
+	{
+		return std::nullopt;
+	}
+
+	auto result = endpoints_[offset_++];
+	offset_ = offset_ % endpoints_.size();
+	return std::make_optional(std::move(result));
 }
 
 bool RoundRobinStrategy::Empty() const
 {
-	return false;
+	return endpoints_.empty();
 }
 

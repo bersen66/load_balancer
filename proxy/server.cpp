@@ -49,17 +49,27 @@ Server::Server(int threads_num, int listen_port, EndpointMap endpoints,
 
 void Server::SetupStrategy(SelectorPtr new_strategy)
 {
+	std::unique_lock lock(mutex_);
 	selector_ = new_strategy;
 }
 
 void Server::InsertEndpoint(const std::string& id, tcp::endpoint ep)
 {
+	std::unique_lock lock(mutex_);
+	endpoints_[id] = ep;
 	selector_->InsertEndpoint(ep);
 }
 
 void Server::EraseEndpoint(const std::string& id)
 {
-
+	std::unique_lock lock(mutex_);
+	if (!endpoints_.contains(id))
+	{
+		return;
+	}
+	const auto& endpoint = endpoints_[id];
+	selector_->EraseEndpoint(endpoint);
+	endpoints_.erase(id);
 }
 
 void Server::Run()
@@ -98,9 +108,21 @@ awaitable<void> Server::StartSession(tcp::socket client)
 	try
 	{
 		tcp::socket server_socket(ioc_);
-		auto endpoint = selector_->Select();
-		auto [err] = co_await server_socket.async_connect(endpoint, as_tuple(
-				use_awaitable));
+
+		auto& self = *this;
+		std::optional<Endpoint> endpoint = [&self]{
+			std::shared_lock lock(self.mutex_);
+			auto result = self.selector_->Select();
+			return result;
+		}();
+
+		if (!endpoint.has_value())
+		{
+			throw std::runtime_error("Couldn't select backend");
+		}
+
+		auto [err] = co_await server_socket.async_connect(endpoint.value(),
+		                                                  as_tuple(use_awaitable));
 
 		if (!err)
 		{

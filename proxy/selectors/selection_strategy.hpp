@@ -1,7 +1,8 @@
 #pragma once
 
+#include <optional>
 #include <memory> // std::shared_ptr
-#include <map>
+
 #include <proxy/endpoints.hpp>
 
 struct SelectionStrategy
@@ -12,7 +13,7 @@ struct SelectionStrategy
 
 	virtual void EraseEndpoint(const Endpoint& ep) = 0;
 
-	virtual Endpoint Select() = 0;
+	virtual std::optional<Endpoint> Select() = 0;
 
 	[[nodiscard]] virtual bool Empty() const = 0;
 
@@ -20,3 +21,9 @@ struct SelectionStrategy
 };
 
 using SelectorPtr = std::shared_ptr<SelectionStrategy>;
+
+template<typename Selector, typename... Args>
+SelectorPtr MakeSelector(Args&& ... args)
+{
+	return std::make_shared<Selector>(std::forward<Args>(args)...);
+}

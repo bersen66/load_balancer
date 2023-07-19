@@ -1,6 +1,9 @@
 #pragma once
 
-#include "selection_strategy.hpp"
+#include <atomic>
+#include <vector>
+
+#include <proxy/selectors/selection_strategy.hpp>
 
 class RoundRobinStrategy final : public SelectionStrategy
 {
@@ -11,16 +14,10 @@ public:
 
 	void EraseEndpoint(const Endpoint& ep) override;
 
-	Endpoint Select() override;
+	std::optional<Endpoint> Select() override;
 
 	[[nodiscard]] bool Empty() const override;
-
 private:
 	std::vector<Endpoint> endpoints_;
+	std::atomic<std::size_t> offset_;
 };
-
-template<typename Selector, typename... Args>
-SelectorPtr MakeSelector(Args&& ... args)
-{
-	return std::make_shared<Selector>(std::forward<Args>(args)...);
-}
