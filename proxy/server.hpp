@@ -1,12 +1,15 @@
 #pragma once
 
+#include <vector>
+#include <shared_mutex>
 #include <thread>
 
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/awaitable.hpp>
 #include <boost/asio/ip/tcp.hpp>
 
-#include <proxy/selectors.hpp>
+#include <proxy/endpoints.hpp>
+#include <proxy/selectors/selectors.hpp>
 
 class Server
 {
@@ -55,7 +58,9 @@ private:
 	std::vector<std::thread> tp;
 	tcp::acceptor acceptor_;
 	int threads_num_;
-	EndpointMap endpoints_;
-	SelectorPtr selector_;
+
+	std::shared_mutex mutex_;
+	EndpointMap endpoints_; // guarded by mutex_
+	SelectorPtr selector_;  // guarded by mutex_
 };
 

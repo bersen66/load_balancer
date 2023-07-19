@@ -1,4 +1,4 @@
-#include <proxy/endpoints.hpp>
+#include <proxy/parse_endpoints.hpp>
 
 using boost::asio::ip::tcp;
 namespace ip = boost::asio::ip;
