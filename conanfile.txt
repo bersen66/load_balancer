@@ -1,6 +1,7 @@
 [requires]
 boost/1.80.0
 yaml-cpp/0.7.0
+ncurses/6.4
 
 [generators]
 CMakeDeps
