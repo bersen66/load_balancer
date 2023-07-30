@@ -128,7 +128,8 @@ awaitable<void> Server::StartSession(tcp::socket client)
 		{
 			Session s(std::move(client), std::move(server_socket));
 			co_await s.Run();
-		} else
+		}
+        else
 		{
 			std::cout << "Session error: " << err.message() << std::endl;
 		}

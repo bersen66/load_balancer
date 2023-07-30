@@ -1,4 +1,3 @@
-
 run-app:
 	mkdir -p -v build && \
 	cd build && \
