@@ -1,15 +1,17 @@
-#include <chrono>
 #include <string>
 #include <cstdlib>
 #include <iostream>
 #include <thread>
+#include <utility>
 
 #include <yaml-cpp/yaml.h>
 #include <boost/program_options.hpp>
 
 #include <proxy/application.hpp>
 #include <proxy/server.hpp>
-#include <utility>
+#include <proxy/commands/commands.hpp>
+#include <proxy/commands/add_endpoint.hpp>
+
 
 namespace opt = boost::program_options;
 
@@ -33,10 +35,12 @@ AppPtr Application::Create(int argc, char** argv)
 
 	opt::variables_map vm;
 
+	// .clang-format off
 	opt::store(opt::command_line_parser(argc, argv)
 			           .options(desc)
 			           .positional(p)
 			           .run(), vm);
+	// .clang-format on
 
 	opt::notify(vm);
 
@@ -51,8 +55,9 @@ AppPtr Application::Create(int argc, char** argv)
 		std::cerr << "path to config file must be specified!" << std::endl;
 		return nullptr;
 	}
-	return std::make_unique<Application>(
-			vm["config"].as<std::string>());
+
+	Application result(vm["config"].as<std::string>());
+	return std::make_unique<Application>(std::move(result));
 }
 
 int Application::Run() noexcept
@@ -63,13 +68,13 @@ int Application::Run() noexcept
 		Server server = Server::FromConfig(config);
 		server.Run();
 
-		// STARTING UI
+		CommandProcessor cp;
+		// .clang-format off
+		cp.AddCommand<AddEndpointBuilder>()
+		  .AddCommand<AddEndpointBuilder>();
+		// .clang-format on
 
-		while (true)
-		{
-			std::cout << "UI" << std::endl;
-			std::this_thread::sleep_for(std::chrono::seconds(100));
-		}
+		cp.ProcessCommands();
 	}
 	catch (const std::exception& exc)
 	{

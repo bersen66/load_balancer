@@ -1,4 +1,3 @@
-
 run-app:
 	mkdir -p -v build && \
 	cd build && \
@@ -7,3 +6,9 @@ run-app:
 	cmake --build . -j $(nproc) && \
 	cd proxy && \
 	./proxy --config=configs/config.yaml
+
+
+install:
+	mkdir -p -v build && \
+	cd build && \
+	conan install .. --build=missing

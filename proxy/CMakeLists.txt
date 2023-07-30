@@ -1,4 +1,5 @@
 add_subdirectory(selectors)
+add_subdirectory(commands)
 
 set(
     SOURCES
@@ -21,14 +22,18 @@ add_executable(
 )
 
 # EXTERNAL LIBS
-target_link_libraries(proxy
+target_link_libraries(
+    proxy
     ${yaml-cpp_LIBRARIES}
+    ${ftxui_LIBRARIES}
     Boost::program_options
 )
 
 # INTERNAL LIBS
-target_link_libraries(proxy
+target_link_libraries(
+    proxy
     libselectors
+    libcommands
 )
 
 # OTHER DEPENDENCIES
