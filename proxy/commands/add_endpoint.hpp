@@ -19,10 +19,9 @@ public:
 class AddEndpointBuilder final : public BasicCommandBuilder
 {
 public:
+	static constexpr std::string_view kCommandName = "Add";
 
-	static constexpr std::string_view kName = "Add";
-
-	CommandPtr Build() override
+	CommandPtr Build(std::string_view params) override
 	{
 		auto result = std::make_shared<AddEndpoint>();
 		return result;

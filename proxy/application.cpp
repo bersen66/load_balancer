@@ -70,8 +70,7 @@ int Application::Run() noexcept
 
 		CommandProcessor cp;
 		// .clang-format off
-		cp.AddCommand<AddEndpointBuilder>()
-		  .AddCommand<AddEndpointBuilder>();
+		cp.AddCommand<AddEndpointBuilder>();
 		// .clang-format on
 
 		cp.ProcessCommands();

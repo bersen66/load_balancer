@@ -1,9 +1,15 @@
 #include <proxy/commands/command_parser.hpp>
-
+#include "impl/parsing.hpp"
 
 [[nodiscard]] CommandPtr CommandParser::ParseCommand(std::string_view src) const
 {
-	return command_map_.at(std::string(src))->Build();
+	const std::string& cmd_name = std::string(
+			impl::ReadToken(src, /*delimiter=*/" "));
+	if (command_map_.contains(cmd_name))
+	{
+		return command_map_.at(cmd_name)->Build(src);
+	}
+	return nullptr; // # TODO: better handling of invalid commands
 }
 
 void CommandParser::Insert(std::string_view name, CommandBuilderPtr value)

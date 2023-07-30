@@ -14,7 +14,7 @@ using CommandPtr = std::shared_ptr<BasicCommand>;
 
 struct BasicCommandBuilder
 {
-	virtual CommandPtr Build() = 0;
+	virtual CommandPtr Build(std::string_view params) = 0;
 
 	virtual ~BasicCommandBuilder() = default;
 };

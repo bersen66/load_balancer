@@ -14,7 +14,7 @@ public:
 		std::unique_ptr<CommandBuilderType> builder
 				= std::make_unique<CommandBuilderType>(
 						std::forward<Args>(args)...);
-		parser_.Insert(CommandBuilderType::kName, std::move(builder));
+		parser_.Insert(CommandBuilderType::kCommandName, std::move(builder));
 		return *this;
 	}
 
