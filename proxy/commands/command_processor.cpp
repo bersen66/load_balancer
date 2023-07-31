@@ -4,7 +4,6 @@
 #include <proxy/commands/command_processor.hpp>
 #include <proxy/commands/shutdown.hpp>
 
-
 void CommandProcessor::ProcessCommands(std::istream& in)
 {
 	for (std::string line; std::getline(in, line);)
@@ -13,7 +12,7 @@ void CommandProcessor::ProcessCommands(std::istream& in)
 		{
 			std::string_view line_view(line);
 			CommandPtr cmd = parser_.ParseCommand(line_view);
-			cmd->Execute();
+            cmd->Execute();
 		}
 		catch(const cmd::Shutdown::ShutdownException& exc)
 		{
@@ -21,7 +20,7 @@ void CommandProcessor::ProcessCommands(std::istream& in)
 		}
 		catch (const std::exception& exc)
 		{
-			std::cout << "Exception: " << exc.what() << std::endl;
+			std::cerr << "Exception: " << exc.what() << std::endl;
 		}
 
 	}

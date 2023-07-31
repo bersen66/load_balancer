@@ -8,7 +8,14 @@ add_library(
     basic_command.hpp
     impl/parsing.hpp
     impl/parsing.cpp
-        shutdown.hpp
-        shutdown.cpp
+    shutdown.hpp
+    shutdown.cpp
+    exceptions/command_not_found.cpp
+    exceptions/command_not_found.hpp
+    exceptions/exceptions.hpp
 )
 
+target_link_libraries(
+    libcommands
+    ${fmt_LIBRARIES}
+)

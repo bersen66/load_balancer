@@ -11,8 +11,6 @@
 #include <proxy/server.hpp>
 #include <proxy/commands/commands.hpp>
 
-
-
 namespace opt = boost::program_options;
 
 Application::Application(std::string path_to_config)
@@ -70,13 +68,12 @@ int Application::Run() noexcept
 
 		CommandProcessor cp;
 		// .clang-format off
-		cp.AddCommand<cmd::ShutdownBuilder>()
-		;
+		cp.AddCommand<cmd::ShutdownBuilder>();
 		// .clang-format on
 
 		cp.ProcessCommands();
 	}
-	catch(const cmd::Shutdown::ShutdownException& exc)
+	catch (const cmd::Shutdown::ShutdownException& exc)
 	{
 		std::cout << "Bye!" << std::endl;
 	}

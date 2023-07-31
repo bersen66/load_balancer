@@ -10,6 +10,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 
 include(cmake/setup_boost.cmake)
 include(cmake/setup_yamlcpp.cmake)
+include(cmake/setup_fmt.cmake)
 
 include(cmake/copy_configs.cmake)
 
