@@ -10,7 +10,7 @@
 #include <proxy/application.hpp>
 #include <proxy/server.hpp>
 #include <proxy/commands/commands.hpp>
-#include <proxy/commands/add_endpoint.hpp>
+
 
 
 namespace opt = boost::program_options;
@@ -70,10 +70,15 @@ int Application::Run() noexcept
 
 		CommandProcessor cp;
 		// .clang-format off
-		cp.AddCommand<AddEndpointBuilder>();
+		cp.AddCommand<cmd::ShutdownBuilder>()
+		;
 		// .clang-format on
 
 		cp.ProcessCommands();
+	}
+	catch(const cmd::Shutdown::ShutdownException& exc)
+	{
+		std::cout << "Bye!" << std::endl;
 	}
 	catch (const std::exception& exc)
 	{

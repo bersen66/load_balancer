@@ -6,8 +6,9 @@ add_library(
     command_parser.hpp
     commands.hpp
     basic_command.hpp
-    add_endpoint.hpp
     impl/parsing.hpp
     impl/parsing.cpp
+        shutdown.hpp
+        shutdown.cpp
 )
 
