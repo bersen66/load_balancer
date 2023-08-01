@@ -10,6 +10,7 @@
 
 #include <proxy/endpoints.hpp>
 #include <proxy/selectors/selectors.hpp>
+#include <yaml-cpp/yaml.h>
 
 class Server
 {
@@ -40,6 +41,8 @@ public:
 
 	void EraseEndpoint(const std::string& id);
 
+	void Flush(std::ostream& out) const;
+
 	void Shutdown();
 
 private:
@@ -59,7 +62,7 @@ private:
 	tcp::acceptor acceptor_;
 	int threads_num_;
 
-	std::shared_mutex mutex_;
+	mutable std::shared_mutex mutex_;
 	EndpointMap endpoints_; // guarded by mutex_
 	SelectorPtr selector_;  // guarded by mutex_
 };

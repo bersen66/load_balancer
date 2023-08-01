@@ -5,6 +5,5 @@
 #include <proxy/commands/command_processor.hpp>
 #include <proxy/commands/command_parser.hpp>
 
-
-
 #include <proxy/commands/shutdown.hpp>
+#include <proxy/commands/list.hpp>

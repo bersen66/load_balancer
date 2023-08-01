@@ -1,5 +1,6 @@
 #include <proxy/commands/shutdown.hpp>
 
+
 namespace cmd
 {
 	void Shutdown::Execute()
@@ -17,6 +18,7 @@ namespace cmd
 		auto result = std::make_shared<Shutdown>();
 		return result;
 	}
+
 
 } // namespace cmd
 
