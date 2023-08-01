@@ -1,7 +1,6 @@
 #include <string>
 #include <cstdlib>
 #include <iostream>
-#include <thread>
 #include <utility>
 
 #include <yaml-cpp/yaml.h>
@@ -68,7 +67,9 @@ int Application::Run() noexcept
 
 		CommandProcessor cp;
 		// .clang-format off
-		cp.AddCommand<cmd::ShutdownBuilder>();
+		cp.AddCommand<cmd::ShutdownBuilder>()
+		  .AddCommand<cmd::ListBuilder>(server, std::cout)
+		;
 		// .clang-format on
 
 		cp.ProcessCommands();

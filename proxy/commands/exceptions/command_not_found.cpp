@@ -4,7 +4,6 @@
 
 namespace cmd
 {
-
 	CommandNotFound::CommandNotFound(std::string_view name)
 		: msg_(fmt::format("Command {} is not found", name))
 	{}

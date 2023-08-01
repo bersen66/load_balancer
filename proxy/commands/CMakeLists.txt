@@ -10,6 +10,8 @@ add_library(
     impl/parsing.cpp
     shutdown.hpp
     shutdown.cpp
+    list.hpp
+    list.cpp
     exceptions/command_not_found.cpp
     exceptions/command_not_found.hpp
     exceptions/exceptions.hpp

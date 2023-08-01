@@ -1,6 +1,7 @@
 #pragma once
 
 #include <proxy/commands/command_parser.hpp>
+#include <iostream>
 
 class CommandProcessor
 {

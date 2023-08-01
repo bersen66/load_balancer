@@ -162,3 +162,12 @@ awaitable<void> Server::DoAccept()
 	}
 
 }
+
+void Server::Flush(std::ostream& out) const
+{
+	std::shared_lock lock(mutex_);
+	for (const auto& [id, endpoint] : endpoints_)
+	{
+		out << id << ": " << endpoint << "\n";
+	}
+}
