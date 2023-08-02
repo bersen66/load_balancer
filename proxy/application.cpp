@@ -69,7 +69,9 @@ int Application::Run() noexcept
 		// .clang-format off
 		cp.AddCommand<cmd::ShutdownBuilder>()
 		  .AddCommand<cmd::ListBuilder>(server, std::cout)
-		  .AddCommand<cmd::InsertBuilder>(server);
+		  .AddCommand<cmd::RemoveBuilder>(server)
+		  .AddCommand<cmd::InsertBuilder>(server)
+		;
 		// .clang-format on
 
 		cp.ProcessCommands();

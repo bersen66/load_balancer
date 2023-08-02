@@ -14,6 +14,8 @@ add_library(
     list.cpp
     insert.hpp
     insert.cpp
+    remove.hpp
+    remove.cpp
     exceptions/command_not_found.cpp
     exceptions/command_not_found.hpp
     exceptions/exceptions.hpp

@@ -8,3 +8,4 @@
 #include <proxy/commands/shutdown.hpp>
 #include <proxy/commands/list.hpp>
 #include <proxy/commands/insert.hpp>
+#include <proxy/commands/remove.hpp>
