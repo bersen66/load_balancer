@@ -1,0 +1,27 @@
+add_library(
+    libcommands
+    command_processor.cpp
+    command_processor.hpp
+    command_parser.cpp
+    command_parser.hpp
+    commands.hpp
+    basic_command.hpp
+    impl/parsing.hpp
+    impl/parsing.cpp
+    shutdown.hpp
+    shutdown.cpp
+    list.hpp
+    list.cpp
+    insert.hpp
+    insert.cpp
+    remove.hpp
+    remove.cpp
+    exceptions/command_not_found.cpp
+    exceptions/command_not_found.hpp
+    exceptions/exceptions.hpp
+)
+
+target_link_libraries(
+    libcommands
+    ${fmt_LIBRARIES}
+)

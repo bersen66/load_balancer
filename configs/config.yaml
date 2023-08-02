@@ -1,0 +1,12 @@
+threads_num: 4
+port: 12900
+endpoints:
+  mock1:
+    ip: 127.0.0.1
+    port: 8080
+  mock2:
+    ip: 127.0.0.1
+    port: 8081
+  mock3:
+    ip: 127.0.0.1
+    port: 8082
