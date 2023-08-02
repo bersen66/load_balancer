@@ -12,6 +12,8 @@ add_library(
     shutdown.cpp
     list.hpp
     list.cpp
+    insert.hpp
+    insert.cpp
     exceptions/command_not_found.cpp
     exceptions/command_not_found.hpp
     exceptions/exceptions.hpp

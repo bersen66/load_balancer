@@ -12,7 +12,15 @@ void CommandProcessor::ProcessCommands(std::istream& in)
 		{
 			std::string_view line_view(line);
 			CommandPtr cmd = parser_.ParseCommand(line_view);
-            cmd->Execute();
+			if (cmd)
+			{
+				cmd->Execute();
+			}
+			else
+			{
+				std::cout << std::endl;
+			}
+
 		}
 		catch(const cmd::Shutdown::ShutdownException& exc)
 		{

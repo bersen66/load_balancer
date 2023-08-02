@@ -6,6 +6,10 @@
 {
 	const std::string& cmd_name = std::string(
 			impl::ReadToken(src, /*delimiter=*/" "));
+	if (cmd_name.empty())
+	{
+		return nullptr;
+	}
 	if (command_map_.contains(cmd_name))
 	{
 		return command_map_.at(cmd_name)->Build(src);

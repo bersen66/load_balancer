@@ -8,6 +8,7 @@ set(
     application.hpp
     parse_endpoints.cpp
     endpoints.hpp
+    endpoints.cpp
     server.cpp
     server.hpp
     session.cpp
